@@ -1,0 +1,22 @@
+name = "forexfactory-api"
+compatibility_date = "2024-01-01"
+main = "src/server.ts"
+
+[site]
+bucket = "./dist"
+
+# Development
+[dev]
+port = 8787
+
+# Production
+[env.production]
+name = "forexfactory-api"
+routes = [
+  { pattern = "api.forexfactory.example.com/*", zone_name = "forexfactory.example.com" }
+]
+
+# KV Namespace (optional - for caching)
+# [[kv_namespaces]]
+# binding = "KV_DATA"
+# id = "your-kv-namespace-id"
