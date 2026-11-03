@@ -1,5 +1,9 @@
 # ForexFactory - Hono + Cloudflare
 
+[![Deploy to Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare-orange?style=flat-square)](https://pages.cloudflare.com/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square)](https://www.typescriptlang.org/)
+[![Hono](https://img.shields.io/badge/Hono-3.x-green?style=flat-square)](https://hono.dev/)
+
 A full-stack Forex trading platform built with **React + Vite** (frontend) and **Hono.js** (backend API), deployed on **Cloudflare Pages**.
 
 ## 🏗️ Architecture
@@ -47,6 +51,40 @@ A full-stack Forex trading platform built with **React + Vite** (frontend) and *
 ├── wrangler.toml               # Cloudflare Workers config
 └── package.json
 ```
+
+## 🚀 Quick Start
+
+### Connect to GitHub
+
+```bash
+# Initialize git repository
+git init
+
+# Add all files
+git add .
+
+# Create initial commit
+git commit -m "Initial commit: ForexFactory with Hono + Cloudflare"
+
+# Add your GitHub remote (replace with your repo URL)
+git remote add origin https://github.com/YOUR_USERNAME/forexfactory-hono.git
+
+# Push to GitHub
+git branch -M main
+git push -u origin main
+```
+
+### Deploy to Cloudflare
+
+1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
+2. Navigate to **Workers & Pages** > **Create** > **Pages**
+3. Connect your GitHub repository
+4. Configure build settings:
+   - **Build command:** `npm run build`
+   - **Build output directory:** `dist`
+5. Click **Save and Deploy**
+
+See [GITHUB_SETUP.md](./GITHUB_SETUP.md) for detailed instructions.
 
 ## 🚀 API Endpoints
 
