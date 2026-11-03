@@ -1,0 +1,62 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ff-dark: #1b1f23;
+  --color-ff-darker: #141719;
+  --color-ff-panel: #232830;
+  --color-ff-border: #2d333b;
+  --color-ff-text: #adbac7;
+  --color-ff-text-light: #d4dce4;
+  --color-ff-accent: #4493d3;
+  --color-ff-red: #da3633;
+  --color-ff-orange: #d29922;
+  --color-ff-yellow: #e3b341;
+  --color-ff-green: #3fb950;
+  --color-ff-header: #1c2128;
+}
+
+body {
+  background-color: #1b1f23;
+  color: #adbac7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1b1f23;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #3d444d;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #4d5562;
+}
+
+.calendar-row:hover {
+  background-color: #2d333b;
+}
+
+.nav-link:hover {
+  color: #ffffff;
+}
+
+.market-ticker {
+  animation: scroll-left 30s linear infinite;
+}
+
+@keyframes scroll-left {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.impact-high { background-color: #da3633; }
+.impact-medium { background-color: #d29922; }
+.impact-low { background-color: #e3b341; }
+.impact-none { background-color: transparent; border: 1px solid #3d444d; }
