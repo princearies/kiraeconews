@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "deploy": "npm run build && wrangler deploy",
+    "deploy": "wrangler deploy",
+    "deploy:pages": "npm run build",
     "dev:worker": "wrangler dev"
   },
   "keywords": [
