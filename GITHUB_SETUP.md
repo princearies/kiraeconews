@@ -12,10 +12,10 @@ git init
 git add .
 
 # Commit
-git commit -m "Initial commit: ForexFactory with Hono + Cloudflare"
+git commit -m "Initial commit: MyKira Eco News with Hono + Cloudflare"
 
 # Add remote (replace with your GitHub URL)
-git remote add origin https://github.com/YOUR_USERNAME/forexfactory-hono.git
+git remote add origin https://github.com/YOUR_USERNAME/mykira-eco-news.git
 
 # Push to GitHub
 git branch -M main
@@ -72,7 +72,7 @@ Add these secrets to your GitHub repository:
 ## 📁 Project Structure
 
 ```
-forexfactory-hono/
+mykira-eco-news/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml          # GitHub Actions CI/CD

@@ -1,4 +1,4 @@
-# Contributing to ForexFactory
+# Contributing to MyKira Eco News
 
 Thank you for your interest in contributing! This document provides guidelines and information for contributors.
 
@@ -33,8 +33,8 @@ Thank you for your interest in contributing! This document provides guidelines a
 
 ```bash
 # Clone your fork
-git clone https://github.com/YOUR_USERNAME/forexfactory-hono.git
-cd forexfactory-hono
+git clone https://github.com/YOUR_USERNAME/mykira-eco-news.git
+cd mykira-eco-news
 
 # Install dependencies
 npm install

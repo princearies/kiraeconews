@@ -23,11 +23,11 @@ export default function Header({ activeTab, setActiveTab }: HeaderProps) {
           {/* Logo */}
           <div className="flex items-center gap-3">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 bg-ff-accent rounded flex items-center justify-center">
-                <i className="fa-solid fa-chart-line text-white text-sm"></i>
+              <div className="w-8 h-8 bg-green-600 rounded flex items-center justify-center">
+                <i className="fa-solid fa-leaf text-white text-sm"></i>
               </div>
               <span className="text-white font-bold text-lg hidden sm:block">
-                Forex<span className="text-ff-accent">Factory</span>
+                MyKira <span className="text-green-400">Eco News</span>
               </span>
             </div>
           </div>

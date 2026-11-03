@@ -6,15 +6,15 @@ export default function Footer() {
           {/* Brand */}
           <div className="col-span-1">
             <div className="flex items-center gap-2 mb-3">
-              <div className="w-7 h-7 bg-ff-accent rounded flex items-center justify-center">
-                <i className="fa-solid fa-chart-line text-white text-xs"></i>
+              <div className="w-7 h-7 bg-green-600 rounded flex items-center justify-center">
+                <i className="fa-solid fa-leaf text-white text-xs"></i>
               </div>
               <span className="text-white font-bold">
-                Forex<span className="text-ff-accent">Factory</span>
+                MyKira <span className="text-green-400">Eco News</span>
               </span>
             </div>
             <p className="text-xs text-ff-text/70 leading-relaxed">
-              Global markets for the smart money. Connecting traders to financial markets with real-time data, charts, and the most trusted economic calendar.
+              Your trusted source for eco-friendly economic news and sustainable market insights. Stay informed with real-time data and environmental economic updates.
             </p>
           </div>
 
@@ -58,7 +58,7 @@ export default function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-ff-border mt-8 pt-6 flex flex-col md:flex-row items-center justify-between gap-4">
           <div className="text-xs text-ff-text/60">
-            © 2024 ForexFactory. All rights reserved. For educational purposes only.
+            © 2026 MyKira Eco News. All rights reserved. For educational purposes only.
           </div>
           <div className="flex items-center gap-4">
             <a href="#" className="text-ff-text/60 hover:text-white transition-colors text-sm">

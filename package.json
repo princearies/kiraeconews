@@ -1,7 +1,7 @@
 {
-  "name": "forexfactory-hono-cloudflare",
+  "name": "mykira-eco-news",
   "version": "1.0.0",
-  "description": "ForexFactory clone with Hono.js and Cloudflare",
+  "description": "MyKira Eco News - Sustainable economic news platform with Hono.js and Cloudflare",
   "type": "module",
   "scripts": {
     "dev": "vite",

@@ -1,10 +1,10 @@
-# ForexFactory - Hono + Cloudflare
+# MyKira Eco News - Hono + Cloudflare
 
 [![Deploy to Cloudflare](https://img.shields.io/badge/Deploy-Cloudflare-orange?style=flat-square)](https://pages.cloudflare.com/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue?style=flat-square)](https://www.typescriptlang.org/)
 [![Hono](https://img.shields.io/badge/Hono-3.x-green?style=flat-square)](https://hono.dev/)
 
-A full-stack Forex trading platform built with **React + Vite** (frontend) and **Hono.js** (backend API), deployed on **Cloudflare Pages**.
+A full-stack eco-friendly economic news platform built with **React + Vite** (frontend) and **Hono.js** (backend API), deployed on **Cloudflare Workers**.
 
 ## 🏗️ Architecture
 
@@ -64,10 +64,10 @@ git init
 git add .
 
 # Create initial commit
-git commit -m "Initial commit: ForexFactory with Hono + Cloudflare"
+git commit -m "Initial commit: MyKira Eco News with Hono + Cloudflare"
 
 # Add your GitHub remote (replace with your repo URL)
-git remote add origin https://github.com/YOUR_USERNAME/forexfactory-hono.git
+git remote add origin https://github.com/YOUR_USERNAME/mykira-eco-news.git
 
 # Push to GitHub
 git branch -M main
@@ -152,10 +152,10 @@ npx wrangler deploy src/server.ts
 npm run build
 
 # 2. Deploy to Cloudflare Pages (includes functions/)
-npx wrangler pages deploy dist --project-name forexfactory
+npx wrangler pages deploy dist --project-name mykira-eco-news
 
 # 3. Or deploy API separately
-npx wrangler deploy src/server.ts --name forexfactory-api
+npx wrangler deploy --name mykira-eco-news
 ```
 
 ## 🔧 Environment Variables

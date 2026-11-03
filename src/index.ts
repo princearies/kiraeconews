@@ -30,7 +30,7 @@ app.get('/api/health', (c) => {
   return c.json({
     status: 'ok',
     timestamp: new Date().toISOString(),
-    service: 'ForexFactory API',
+    service: 'MyKira Eco News API',
     version: '1.0.0'
   })
 })
@@ -170,7 +170,7 @@ app.get('/api/news', (c) => {
       time: '2 hrs ago',
       category: 'Analysis',
       title: 'EUR/USD Technical Analysis: Key Support at 1.0800 Tested',
-      source: 'ForexFactory',
+      source: 'MyKira Eco News',
       important: false,
       summary: 'The euro-dollar pair is testing a critical support level. A break below could signal further downside toward 1.0750.'
     },

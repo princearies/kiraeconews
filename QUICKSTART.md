@@ -10,13 +10,13 @@ git init
 git add .
 
 # Create first commit
-git commit -m "Initial commit: ForexFactory with Hono + Cloudflare"
+git commit -m "Initial commit: MyKira Eco News with Hono + Cloudflare"
 ```
 
 ## Step 2: Create GitHub Repository
 
 1. Go to [GitHub](https://github.com/new)
-2. Create a new repository named `forexfactory-hono`
+2. Create a new repository named `mykira-eco-news`
 3. Don't initialize with README (we already have one)
 4. Copy the repository URL
 
@@ -24,7 +24,7 @@ git commit -m "Initial commit: ForexFactory with Hono + Cloudflare"
 
 ```bash
 # Add remote (replace YOUR_USERNAME with your GitHub username)
-git remote add origin https://github.com/YOUR_USERNAME/forexfactory-hono.git
+git remote add origin https://github.com/YOUR_USERNAME/mykira-eco-news.git
 
 # Push to GitHub
 git branch -M main
@@ -38,7 +38,7 @@ git push -u origin main
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com/)
 2. Click **Workers & Pages** > **Create** > **Pages**
 3. Select **Connect to Git**
-4. Choose your `forexfactory-hono` repository
+4. Choose your `mykira-eco-news` repository
 5. Configure build settings:
    - **Framework preset:** None
    - **Build command:** `npm run build`
@@ -66,22 +66,22 @@ npm run deploy
 2. Navigate to **Settings** > **Environment variables**
 3. Add variable:
    - **Name:** `VITE_API_URL`
-   - **Value:** `https://forexfactory.pages.dev/api`
+   - **Value:** `https://mykira-eco-news.pages.dev/api`
    - **Environment:** Production
 4. Click **Save**
 5. Redeploy if necessary
 
 ## Step 6: Verify Deployment
 
-1. Visit your deployed site: `https://forexfactory.pages.dev`
+1. Visit your deployed site: `https://mykira-eco-news.pages.dev`
 2. Test API endpoints:
-   - `https://forexfactory.pages.dev/api/health`
-   - `https://forexfactory.pages.dev/api/markets`
-   - `https://forexfactory.pages.dev/api/calendar`
+   - `https://mykira-eco-news.pages.dev/api/health`
+   - `https://mykira-eco-news.pages.dev/api/markets`
+   - `https://mykira-eco-news.pages.dev/api/calendar`
 
 ## 🎉 You're Done!
 
-Your ForexFactory clone is now live on Cloudflare Pages with:
+Your MyKira Eco News platform is now live on Cloudflare Pages with:
 - ✅ React frontend with dark theme
 - ✅ Hono.js API backend
 - ✅ Automatic deployments via GitHub
