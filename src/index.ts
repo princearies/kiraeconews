@@ -1,12 +1,22 @@
 import { Hono } from 'hono'
 import { cors } from 'hono/cors'
 
-// Types
+// Types untuk Cloudflare Workers
 type Bindings = {
-  KV_DATA: any
+  ASSETS: { fetch: (request: Request) => Promise<Response> }
 }
 
-const app = new Hono<{ Bindings: Bindings }>()
+type Env = {
+  Bindings: Bindings
+}
+
+// ExecutionContext type untuk Cloudflare Workers
+interface ExecutionContext {
+  waitUntil(promise: Promise<any>): void
+  passThroughOnException(): void
+}
+
+const app = new Hono<Env>()
 
 // Middleware
 app.use('/*', cors())
@@ -43,7 +53,7 @@ app.get('/api/markets', (c) => {
   ]
 
   return c.json({
-    data: markets,
+     markets,
     updated: new Date().toISOString()
   })
 })
@@ -67,7 +77,7 @@ app.get('/api/markets/:pair', (c) => {
   }
 
   return c.json({
-    data: market,
+     market,
     updated: new Date().toISOString()
   })
 })
@@ -197,7 +207,7 @@ app.get('/api/news', (c) => {
   const paginatedNews = allNews.slice(start, start + limit)
 
   return c.json({
-    data: paginatedNews,
+     paginatedNews,
     pagination: {
       page,
       limit,
@@ -220,25 +230,52 @@ app.get('/api/sentiment', (c) => {
   }
 
   return c.json({
-    data: sentiment,
+     sentiment,
     updated: new Date().toISOString()
   })
 })
 
-// ============================================
-// Static file serving handled by Cloudflare Pages
-// API routes only in this worker
-// ============================================
-
-// 404 handler
+// 404 handler untuk API routes yang tidak wujud
 app.notFound((c) => {
-  return c.json({ error: 'Not Found' }, 404)
+  return c.json({ error: 'API endpoint not found' }, 404)
 })
 
 // Error handler
 app.onError((err, c) => {
-  console.error('Server Error:', err)
+  console.error('API Error:', err)
   return c.json({ error: 'Internal Server Error' }, 500)
 })
 
-export default app
+// ============================================
+// Main Worker Export
+// ============================================
+
+export default {
+  async fetch(request: Request, env: Bindings, ctx: ExecutionContext): Promise<Response> {
+    const url = new URL(request.url)
+    
+    // API routes - handle dengan Hono
+    if (url.pathname.startsWith('/api/')) {
+      return app.fetch(request, env, ctx)
+    }
+    
+    // Static files - serve dari ASSETS binding
+    try {
+      const response = await env.ASSETS.fetch(request)
+      
+      // SPA fallback - serve index.html untuk routes yang bukan file
+      if (response.status === 404 && !url.pathname.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+        const indexRequest = new Request(new URL('/index.html', request.url).href, {
+          method: 'GET',
+          headers: request.headers
+        })
+        return env.ASSETS.fetch(indexRequest)
+      }
+      
+      return response
+    } catch (error) {
+      console.error('Static asset error:', error)
+      return new Response('Not Found', { status: 404 })
+    }
+  }
+}
