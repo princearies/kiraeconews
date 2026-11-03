@@ -1,24 +1,19 @@
+#:schema node_modules/wrangler/config-schema.json
 name = "mykira-eco-news"
 main = "src/index.ts"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
 
-# Static assets configuration
-[assets]
-directory = "./dist"
-binding = "ASSETS"
+# Static assets configuration for serving React build
+assets = { directory = "./dist", binding = "ASSETS" }
 
 # Development settings
 [dev]
 port = 8787
-ip = "0.0.0.0"
 
 # Production environment
 [env.production]
 name = "mykira-eco-news-prod"
-routes = [
-  { pattern = "mykira-eco-news.example.com/*", zone_name = "example.com" }
-]
 
 # Optional: KV Namespace for caching
 # [[kv_namespaces]]
