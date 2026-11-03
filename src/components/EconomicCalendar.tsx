@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 interface CalendarEvent {
   time: string;
@@ -13,6 +13,9 @@ interface CalendarEvent {
 export default function EconomicCalendar() {
   const [filter, setFilter] = useState<string>('all');
   const [selectedDate, setSelectedDate] = useState('today');
+  const [events, setEvents] = useState<CalendarEvent[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const today = new Date();
   const dateStr = today.toLocaleDateString('en-US', { 
@@ -22,22 +25,66 @@ export default function EconomicCalendar() {
     day: 'numeric' 
   });
 
-  const events: CalendarEvent[] = [
-    { time: '2:00am', currency: 'EUR', impact: 'medium', event: 'German CPI (YoY)', forecast: '2.4%', previous: '2.2%', actual: '2.5%' },
-    { time: '3:00am', currency: 'EUR', impact: 'low', event: 'Italian Industrial Production (MoM)', forecast: '0.3%', previous: '-0.2%', actual: '' },
-    { time: '4:30am', currency: 'GBP', impact: 'high', event: 'Construction PMI', forecast: '53.2', previous: '53.0', actual: '53.8' },
-    { time: '5:00am', currency: 'EUR', impact: 'medium', event: 'Spanish Unemployment Change', forecast: '25.0K', previous: '28.9K', actual: '22.3K' },
-    { time: '7:00am', currency: 'GBP', impact: 'high', event: 'MPC Member Mann Speaks', forecast: '', previous: '', actual: '' },
-    { time: '8:30am', currency: 'USD', impact: 'high', event: 'Non-Farm Payrolls', forecast: '185K', previous: '175K', actual: '' },
-    { time: '8:30am', currency: 'USD', impact: 'high', event: 'Unemployment Rate', forecast: '3.8%', previous: '3.8%', actual: '' },
-    { time: '8:30am', currency: 'USD', impact: 'high', event: 'Average Hourly Earnings (MoM)', forecast: '0.2%', previous: '0.2%', actual: '' },
-    { time: '10:00am', currency: 'USD', impact: 'medium', event: 'ISM Manufacturing PMI', forecast: '49.5', previous: '49.2', actual: '' },
-    { time: '10:00am', currency: 'USD', impact: 'low', event: 'Construction Spending (MoM)', forecast: '0.2%', previous: '0.3%', actual: '' },
-    { time: '1:00pm', currency: 'USD', impact: 'medium', event: 'Fed Chair Powell Speaks', forecast: '', previous: '', actual: '' },
-    { time: '3:30pm', currency: 'USD', impact: 'low', event: 'Crude Oil Inventories', forecast: '-1.2M', previous: '-2.6M', actual: '' },
-    { time: '7:30pm', currency: 'AUD', impact: 'high', event: 'RBA Rate Decision', forecast: '4.35%', previous: '4.35%', actual: '' },
-    { time: '9:30pm', currency: 'AUD', impact: 'medium', event: 'RBA Monetary Policy Statement', forecast: '', previous: '', actual: '' },
-  ];
+  // Fetch data from live API
+  useEffect(() => {
+    const fetchCalendarData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch(
+          'https://crypto-micro-agent.mykira.workers.dev/api/public/calendar?matawang=USD'
+        );
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        
+        // Map API response to our CalendarEvent interface
+        // Adjust mapping based on actual API response structure
+        const mappedEvents: CalendarEvent[] = (data.events || data || []).map((item: any) => ({
+          time: item.time || item.waktu || '',
+          currency: item.currency || item.matawang || 'USD',
+          impact: mapImpact(item.impact || item.impak || 'none'),
+          event: item.event || item.acara || '',
+          forecast: item.forecast || item.ramalan || '',
+          previous: item.previous || item.sebelum || '',
+          actual: item.actual || item.sebenar || '',
+        }));
+        
+        setEvents(mappedEvents);
+      } catch (err) {
+        console.error('Failed to fetch calendar data:', err);
+        setError(err instanceof Error ? err.message : 'Failed to load calendar data');
+        setEvents([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchCalendarData();
+    
+    // Refresh every 5 minutes
+    const interval = setInterval(fetchCalendarData, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Helper function to map impact levels
+  const mapImpact = (impact: string): 'high' | 'medium' | 'low' | 'none' => {
+    const lowerImpact = impact.toLowerCase();
+    if (lowerImpact.includes('high') || lowerImpact === 'tinggi' || lowerImpact === '3') {
+      return 'high';
+    }
+    if (lowerImpact.includes('medium') || lowerImpact === 'sederhana' || lowerImpact === '2') {
+      return 'medium';
+    }
+    if (lowerImpact.includes('low') || lowerImpact === 'rendah' || lowerImpact === '1') {
+      return 'low';
+    }
+    return 'none';
+  };
 
   const filteredEvents = filter === 'all' 
     ? events 
@@ -119,20 +166,60 @@ export default function EconomicCalendar() {
 
       {/* Calendar Table */}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="text-xs text-ff-text border-b border-ff-border bg-ff-darker/30">
-              <th className="text-left px-3 py-2 font-medium w-20">Time</th>
-              <th className="text-left px-3 py-2 font-medium w-12">Cur</th>
-              <th className="text-left px-3 py-2 font-medium w-12">Impact</th>
-              <th className="text-left px-3 py-2 font-medium">Event</th>
-              <th className="text-right px-3 py-2 font-medium w-20">Actual</th>
-              <th className="text-right px-3 py-2 font-medium w-20">Forecast</th>
-              <th className="text-right px-3 py-2 font-medium w-20">Previous</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredEvents.map((event, idx) => (
+        {/* Loading State */}
+        {loading && (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-8 h-8 border-2 border-ff-accent border-t-transparent rounded-full animate-spin"></div>
+              <span className="text-sm text-ff-text">Loading calendar data...</span>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {error && !loading && (
+          <div className="flex items-center justify-center py-12 px-4">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <i className="fa-solid fa-triangle-exclamation text-ff-red text-2xl"></i>
+              <span className="text-sm text-ff-text">Failed to load calendar data</span>
+              <span className="text-xs text-ff-text/60">{error}</span>
+              <button 
+                onClick={() => window.location.reload()}
+                className="mt-2 px-3 py-1.5 bg-ff-accent text-white text-xs rounded hover:bg-blue-600 transition-colors"
+              >
+                Retry
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Empty State */}
+        {!loading && !error && filteredEvents.length === 0 && (
+          <div className="flex items-center justify-center py-12">
+            <div className="flex flex-col items-center gap-3 text-center">
+              <i className="fa-solid fa-calendar-xmark text-ff-text/40 text-2xl"></i>
+              <span className="text-sm text-ff-text">No events found</span>
+              <span className="text-xs text-ff-text/60">Try selecting a different date or currency</span>
+            </div>
+          </div>
+        )}
+
+        {/* Data Table */}
+        {!loading && !error && filteredEvents.length > 0 && (
+          <table className="w-full text-sm">
+            <thead>
+              <tr className="text-xs text-ff-text border-b border-ff-border bg-ff-darker/30">
+                <th className="text-left px-3 py-2 font-medium w-20">Time</th>
+                <th className="text-left px-3 py-2 font-medium w-12">Cur</th>
+                <th className="text-left px-3 py-2 font-medium w-12">Impact</th>
+                <th className="text-left px-3 py-2 font-medium">Event</th>
+                <th className="text-right px-3 py-2 font-medium w-20">Actual</th>
+                <th className="text-right px-3 py-2 font-medium w-20">Forecast</th>
+                <th className="text-right px-3 py-2 font-medium w-20">Previous</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredEvents.map((event, idx) => (
               <tr key={idx} className="calendar-row border-b border-ff-border/50 transition-colors">
                 <td className="px-3 py-2.5 text-ff-text-light font-mono text-xs">{event.time}</td>
                 <td className="px-3 py-2.5">
@@ -166,8 +253,9 @@ export default function EconomicCalendar() {
                 <td className="px-3 py-2.5 text-right font-mono text-xs text-ff-text">{event.previous || '—'}</td>
               </tr>
             ))}
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        )}
       </div>
 
       {/* Calendar Footer */}
