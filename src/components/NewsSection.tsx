@@ -32,7 +32,7 @@ export default function NewsSection() {
       time: '2 hrs ago',
       category: 'Analysis',
       title: 'EUR/USD Technical Analysis: Key Support at 1.0800 Tested',
-      source: 'ForexFactory',
+      source: 'MyKira Eco News',
       important: false,
     },
     {

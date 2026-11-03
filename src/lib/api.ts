@@ -1,4 +1,4 @@
-// API Client for ForexFactory Hono Backend
+// API Client for MyKira Eco News Hono Backend
 // Works with both local development and Cloudflare deployment
 
 const API_BASE = (typeof import.meta !== 'undefined' && (import.meta as any).env?.VITE_API_URL) || '/api'
